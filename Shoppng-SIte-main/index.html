@@ -1,0 +1,2418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VQuint — Discover What You Love</title>
+  <!-- Font Awesome CDN for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap"
+    rel="stylesheet" />
+  <script src="js/store.js"></script>
+  <style>
+    /* ───────── RESET & BASE ───────── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--off-white);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gray-200);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gray-400);
+    }
+
+    :root {
+      --orange: #FF6B2C;
+      --orange-light: #FF8F5E;
+      --coral: #FF8A7A;
+      --coral-light: #FFB4A9;
+      --peach: #FFEAE6;
+      --off-white: #FFF9F6;
+      --white: #FFFFFF;
+      --dark: #1A1A2E;
+      --gray-800: #2D2D3F;
+      --gray-600: #6B6B80;
+      --gray-400: #A0A0B2;
+      --gray-200: #E8E8EE;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow-sm: 0 2px 12px rgba(255, 107, 44, .08);
+      --shadow-md: 0 8px 30px rgba(255, 107, 44, .10);
+      --shadow-lg: 0 20px 60px rgba(255, 107, 44, .12);
+      --shadow-card: 0 4px 24px rgba(26, 26, 46, .06);
+      --transition: .35s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--dark);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ───────── UTILITY ───────── */
+    .container {
+      width: 92%;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      background: var(--orange);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15;
+      color: var(--dark);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--gray-600);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: .95rem;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(255, 107, 44, .35);
+    }
+
+    .btn-primary:hover {
+      background: #e55d24;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 107, 44, .45);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--orange);
+      border: 2px solid var(--orange);
+    }
+
+    .btn-outline:hover {
+      background: var(--orange);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ───────── ANNOUNCEMENT BAR ───────── */
+    .announce-bar {
+      background: var(--dark);
+      color: var(--white);
+      text-align: center;
+      padding: 10px 16px;
+      font-size: .82rem;
+      font-weight: 500;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .announce-bar span {
+      color: var(--coral-light);
+      font-weight: 700;
+    }
+
+    .announce-bar .announce-scroll {
+      display: inline-block;
+      animation: announceScroll 20s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes announceScroll {
+      0% {
+        transform: translateX(100%);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* ───────── NAVBAR ───────── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 249, 246, .85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 107, 44, .06);
+      padding: 0 0;
+      transition: var(--transition);
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.7rem;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .logo i {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      font-style: normal;
+      font-size: .9rem;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .nav-links a {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--orange);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--orange);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-actions .icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+      font-size: 1.1rem;
+    }
+
+    .nav-actions .icon-btn:hover {
+      background: var(--orange);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .nav-actions .icon-btn .badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--coral);
+      color: var(--white);
+      font-size: .65rem;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      padding: 8px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2.5px;
+      background: var(--dark);
+      border-radius: 4px;
+      transition: var(--transition);
+    }
+
+    /* ───────── CART DRAWER ───────── */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      background: var(--white);
+      z-index: 9999;
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-header h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+    }
+
+    .cart-close {
+      background: none;
+      font-size: 1.2rem;
+      color: var(--gray-600);
+      transition: 0.2s;
+    }
+
+    .cart-close:hover {
+      color: var(--dark);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-details h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .cart-item-meta {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      margin-bottom: 8px;
+    }
+
+    .cart-item-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-item-price {
+      font-weight: 700;
+      color: var(--orange);
+    }
+
+    .cart-qty-ctrl {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--gray-200);
+      border-radius: 40px;
+      padding: 4px 10px;
+    }
+
+    .cart-qty-ctrl button {
+      background: none;
+      font-size: 1rem;
+      color: var(--gray-600);
+    }
+
+    .cart-qty-ctrl span {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .cart-item-remove {
+      background: none;
+      color: var(--gray-400);
+      transition: 0.2s;
+    }
+
+    .cart-item-remove:hover {
+      color: var(--coral);
+    }
+
+    .empty-cart {
+      text-align: center;
+      color: var(--gray-400);
+      padding: 40px 0;
+    }
+
+    .empty-cart i {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      color: var(--peach);
+    }
+
+    .cart-footer {
+      padding: 24px;
+      border-top: 1px solid var(--gray-200);
+      background: var(--off-white);
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .btn-checkout {
+      width: 100%;
+      background: var(--dark);
+      padding: 16px;
+      border-radius: 60px;
+      color: var(--white);
+      font-weight: 700;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .btn-checkout:hover {
+      background: var(--orange);
+    }
+
+    /* ───────── SEARCH MODAL (Compact Dropdown) ───────── */
+    .search-modal {
+      position: fixed;
+      top: 76px;
+      right: 4%;
+      width: 400px;
+      max-width: 90vw;
+      background: var(--white);
+      border-radius: var(--radius-sm);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--gray-200);
+    }
+
+    .search-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(10px);
+    }
+
+    .search-box {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      font-size: 1.1rem;
+      font-family: inherit;
+      font-weight: 600;
+      outline: none;
+      background: transparent;
+    }
+
+    .search-close {
+      font-size: 1.2rem;
+      background: none;
+      color: var(--gray-600);
+    }
+
+    .search-results {
+      max-height: 400px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+
+    .search-result-item:hover {
+      background: var(--off-white);
+    }
+
+    .search-result-item img {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .search-result-info h4 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      color: var(--dark);
+    }
+
+    .search-result-info span {
+      font-weight: 700;
+      color: var(--orange);
+      font-size: 0.85rem;
+    }
+
+    .search-no-results {
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+    }
+
+
+    /* ───────── HERO ───────── */
+    .hero {
+      padding: 60px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--peach) 0%, transparent 70%);
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 138, 122, .15) 0%, transparent 70%);
+      z-index: 0;
+    }
+
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      padding: 8px 18px 8px 8px;
+      border-radius: 60px;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero-text .badge-pill .dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      font-size: .7rem;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .hero-text h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--dark);
+    }
+
+    .hero-text h1 .highlight {
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 460px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+    }
+
+    .hero-stats .stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-stats .stat-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-stats .stat-label {
+      font-size: .82rem;
+      color: var(--gray-400);
+      font-weight: 600;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-img-main {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+
+    .hero-img-main img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+    }
+
+    .hero-float-card {
+      position: absolute;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-md);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .hero-float-card.card-1 {
+      bottom: 40px;
+      left: -40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation-delay: .5s;
+    }
+
+    .hero-float-card.card-1 .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      display: grid;
+      place-items: center;
+      color: var(--white);
+      font-size: 1.2rem;
+    }
+
+    .hero-float-card.card-1 .info strong {
+      display: block;
+      font-size: .85rem;
+    }
+
+    .hero-float-card.card-1 .info span {
+      font-size: .75rem;
+      color: var(--gray-400);
+    }
+
+    .hero-float-card.card-2 {
+      top: 30px;
+      right: -30px;
+      text-align: center;
+      animation-delay: 1s;
+    }
+
+    .hero-float-card.card-2 .stars {
+      color: #FFBE2E;
+      font-size: .9rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-float-card.card-2 strong {
+      font-size: .85rem;
+    }
+
+    .hero-float-card.card-2 span {
+      font-size: .72rem;
+      color: var(--gray-400);
+      display: block;
+    }
+
+    /* ───────── SCROLLING BANNER ───────── */
+    .scroll-banner {
+      background: var(--dark);
+      padding: 18px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scroll-track {
+      display: flex;
+      gap: 60px;
+      animation: scrollBanner 25s linear infinite;
+      width: max-content;
+    }
+
+    .scroll-track .item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      white-space: nowrap;
+      color: rgba(255, 255, 255, .7);
+      font-size: .95rem;
+      font-weight: 600;
+    }
+
+    .scroll-track .item .sep {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+
+    @keyframes scrollBanner {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ───────── CATEGORIES ───────── */
+    .categories {
+      padding: 80px 0;
+    }
+
+    .categories .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .cat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .cat-card:hover {
+      border-color: var(--orange);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .cat-card .cat-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 1.6rem;
+      background: var(--peach);
+      transition: var(--transition);
+    }
+
+    .cat-card:hover .cat-icon {
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      transform: scale(1.1) rotate(-5deg);
+    }
+
+    .cat-card h4 {
+      font-size: .95rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .cat-card span {
+      font-size: .78rem;
+      color: var(--gray-400);
+    }
+
+    /* ───────── FEATURED PRODUCTS ───────── */
+    .products {
+      padding: 80px 0;
+      background: var(--white);
+    }
+
+    .products .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .product-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .product-tabs button {
+      padding: 10px 24px;
+      border-radius: 60px;
+      font-size: .85rem;
+      font-weight: 600;
+      background: var(--off-white);
+      color: var(--gray-600);
+      transition: var(--transition);
+    }
+
+    .product-tabs button.active,
+    .product-tabs button:hover {
+      background: var(--orange);
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(255, 107, 44, .3);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 24px;
+    }
+
+    .product-card {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .product-card .card-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 6px 14px;
+      border-radius: 60px;
+      font-size: .72rem;
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    .card-badge.new {
+      background: var(--orange);
+      color: var(--white);
+    }
+
+    .card-badge.sale {
+      background: var(--coral);
+      color: var(--white);
+    }
+
+    .card-badge.hot {
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    .product-card .card-actions {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      opacity: 0;
+      transform: translateX(10px);
+      transition: var(--transition);
+      z-index: 2;
+    }
+
+    .product-card:hover .card-actions {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .card-actions button {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-sm);
+      font-size: .9rem;
+      transition: var(--transition);
+    }
+
+    .card-actions button:hover {
+      background: var(--orange);
+      color: var(--white);
+    }
+
+    .product-card .card-img {
+      height: 280px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-card .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .product-card:hover .card-img img {
+      transform: scale(1.08);
+    }
+
+    .product-card .card-body {
+      padding: 20px;
+    }
+
+    .card-body .card-cat {
+      font-size: .72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--orange);
+      margin-bottom: 6px;
+    }
+
+    .card-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .card-body .card-rating {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .card-rating .stars {
+      color: #FFBE2E;
+      font-size: .8rem;
+    }
+
+    .card-rating span {
+      font-size: .78rem;
+      color: var(--gray-400);
+    }
+
+    .card-body .card-price {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-price .price {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--orange);
+    }
+
+    .card-price .old-price {
+      font-size: .88rem;
+      color: var(--gray-400);
+      text-decoration: line-through;
+    }
+
+    .card-body .card-add {
+      margin-top: 16px;
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      background: var(--dark);
+      color: var(--white);
+      font-weight: 700;
+      font-size: .85rem;
+      transition: var(--transition);
+    }
+
+    .card-body .card-add:hover {
+      background: var(--orange);
+    }
+
+    /* ───────── PROMO BANNER ───────── */
+    .promo {
+      padding: 80px 0;
+    }
+
+    .promo-inner {
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      border-radius: 32px;
+      padding: 60px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promo-inner::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 50%;
+    }
+
+    .promo-inner::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: 30%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, .08);
+      border-radius: 50%;
+    }
+
+    .promo-text {
+      position: relative;
+      z-index: 1;
+      color: var(--white);
+    }
+
+    .promo-text .section-label {
+      color: rgba(255, 255, 255, .8);
+    }
+
+    .promo-text .section-label::before {
+      background: rgba(255, 255, 255, .5);
+    }
+
+    .promo-text h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .promo-text p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      opacity: .9;
+      margin-bottom: 32px;
+      max-width: 420px;
+    }
+
+    .promo-text .btn {
+      background: var(--white);
+      color: var(--orange);
+      font-weight: 800;
+    }
+
+    .promo-text .btn:hover {
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    .promo-timer {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .promo-timer .time-box {
+      background: rgba(255, 255, 255, .2);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      text-align: center;
+      min-width: 70px;
+    }
+
+    .promo-timer .time-box .num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      display: block;
+    }
+
+    .promo-timer .time-box .lbl {
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: .8;
+    }
+
+    .promo-img {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .promo-img img {
+      width: 100%;
+      max-width: 380px;
+      border-radius: var(--radius);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .15);
+    }
+
+    /* ───────── FEATURES ───────── */
+    .features {
+      padding: 80px 0;
+      background: var(--white);
+    }
+
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .feat-card {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .feat-card:hover {
+      border-color: var(--orange);
+      transform: translateY(-4px);
+    }
+
+    .feat-card .feat-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+
+    .feat-card h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feat-card p {
+      font-size: .88rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ───────── REVIEWS ───────── */
+    .reviews {
+      padding: 80px 0;
+    }
+
+    .reviews .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .reviews .section-sub {
+      margin: 0 auto;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .review-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .review-card:hover {
+      border-color: var(--coral-light);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .review-card .review-stars {
+      color: #FFBE2E;
+      font-size: .9rem;
+      margin-bottom: 16px;
+    }
+
+    .review-card p {
+      font-size: .95rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .review-card .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .reviewer .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--peach);
+    }
+
+    .reviewer .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .reviewer .info strong {
+      display: block;
+      font-size: .88rem;
+    }
+
+    .reviewer .info span {
+      font-size: .75rem;
+      color: var(--gray-400);
+    }
+
+    /* ───────── NEWSLETTER ───────── */
+    .newsletter {
+      padding: 80px 0;
+      background: var(--white);
+    }
+
+    .nl-inner {
+      background: var(--off-white);
+      border-radius: 32px;
+      padding: 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nl-inner::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      background: var(--peach);
+      border-radius: 50%;
+    }
+
+    .nl-inner::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: -40px;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 138, 122, .1);
+      border-radius: 50%;
+    }
+
+    .nl-inner>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nl-inner .section-sub {
+      margin: 0 auto 32px;
+    }
+
+    .nl-form {
+      display: flex;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .nl-form input {
+      flex: 1;
+      padding: 16px 24px;
+      border-radius: 60px;
+      border: 2px solid var(--gray-200);
+      font-family: inherit;
+      font-size: .95rem;
+      outline: none;
+      transition: var(--transition);
+      background: var(--white);
+    }
+
+    .nl-form input:focus {
+      border-color: var(--orange);
+    }
+
+    .nl-form button {
+      padding: 16px 32px;
+      border-radius: 60px;
+      background: var(--orange);
+      color: var(--white);
+      font-weight: 700;
+      font-size: .95rem;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .nl-form button:hover {
+      background: #e55d24;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 107, 44, .35);
+    }
+
+    /* ───────── FOOTER ───────── */
+    .footer {
+      background: var(--dark);
+      color: rgba(255, 255, 255, .7);
+      padding: 60px 0 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo {
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      font-size: .88rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      max-width: 280px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .08);
+      display: grid;
+      place-items: center;
+      font-size: .9rem;
+      transition: var(--transition);
+    }
+
+    .footer-social a:hover {
+      background: var(--orange);
+      color: var(--white);
+      transform: translateY(-3px);
+    }
+
+    .footer-col h5 {
+      color: var(--white);
+      font-size: .9rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: .85rem;
+      padding: 6px 0;
+      transition: var(--transition);
+    }
+
+    .footer-col a:hover {
+      color: var(--orange);
+      padding-left: 6px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: .82rem;
+    }
+
+    .footer-payments {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-payments span {
+      padding: 4px 12px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .08);
+      font-size: .75rem;
+      font-weight: 600;
+    }
+
+    /* ───────── BACK TO TOP ───────── */
+    .back-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      z-index: 999;
+      box-shadow: 0 4px 20px rgba(255, 107, 44, .4);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .back-top.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-top:hover {
+      background: var(--dark);
+      transform: translateY(-4px);
+    }
+
+    /* ───────── MOBILE NAV ───────── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, .5);
+      backdrop-filter: blur(6px);
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu-inner {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 80%;
+      max-width: 360px;
+      height: 100%;
+      background: var(--white);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      transform: translateX(100%);
+      transition: var(--transition);
+    }
+
+    .mobile-menu.open .mobile-menu-inner {
+      transform: translateX(0);
+    }
+
+    .mobile-menu-inner .close-btn {
+      align-self: flex-end;
+      background: none;
+      font-size: 1.5rem;
+      color: var(--dark);
+    }
+
+    .mobile-menu-inner a {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gray-200);
+      color: var(--dark);
+    }
+
+    .mobile-menu-inner a:hover {
+      color: var(--orange);
+    }
+
+    /* ───────── RESPONSIVE ───────── */
+    @media (max-width: 1024px) {
+      .hero .container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-text p {
+        margin: 0 auto 36px;
+      }
+
+      .hero-btns {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        margin-top: 40px;
+      }
+
+      .promo-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 48px 32px;
+      }
+
+      .promo-text .section-sub,
+      .promo-text p {
+        margin: 0 auto 32px;
+      }
+
+      .promo-timer {
+        justify-content: center;
+      }
+
+      .promo-img {
+        margin-top: 20px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hero-text h1 {
+        font-size: 2.4rem;
+      }
+
+      .hero-float-card.card-1 {
+        left: 10px;
+        bottom: 20px;
+      }
+
+      .hero-float-card.card-2 {
+        right: 10px;
+        top: 10px;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      }
+
+      .review-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .promo-inner {
+        padding: 36px 24px;
+      }
+
+      .promo-timer .time-box {
+        min-width: 60px;
+        padding: 12px;
+      }
+
+      .promo-timer .time-box .num {
+        font-size: 1.4rem;
+      }
+
+      .nl-inner {
+        padding: 40px 24px;
+      }
+
+      .nl-form {
+        flex-direction: column;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 0 60px;
+      }
+
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .hero-stats {
+        gap: 24px;
+      }
+
+      .hero-img-main img {
+        height: 360px;
+      }
+
+      .cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ───────── ANIMATIONS ON SCROLL ───────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ ANNOUNCEMENT BAR ═══ -->
+  <div class="announce-bar">
+    <div class="announce-scroll">
+      <i class="fa-solid fa-fire"></i> <span>FLASH SALE</span> — Up to 60% off on trending styles &nbsp;|&nbsp;
+      <i class="fa-solid fa-truck"></i> Free Shipping on orders over ₹999 &nbsp;|&nbsp;
+      <i class="fa-solid fa-gift"></i> Use code <span>VQUINT25</span> for an extra 25% off &nbsp;|&nbsp;
+      <i class="fa-solid fa-star"></i> New Arrivals just dropped — Shop Now!
+    </div>
+  </div>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#" class="logo"><i>V</i> vquint</a>
+      <ul class="nav-links">
+        <li><a href="index.html#new-arrivals">New In</a></li>
+        <li><a href="index.html#women">Women</a></li>
+        <li><a href="index.html#men">Men</a></li>
+        <li><a href="index.html#accessories">Accessories</a></li>
+        <li><a href="index.html#sale">Sale</a></li>
+        <li><a href="admin.html" style="color: var(--orange); font-weight: 800;">Admin</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn" aria-label="Search" onclick="VQuint.openSearch()"><i
+            class="fa-solid fa-magnifying-glass"></i></button>
+        <a href="wishlist.html" class="icon-btn" aria-label="Wishlist"><i class="fa-regular fa-heart"></i><span
+            class="badge wishlist-badge" style="display:none;">0</span></a>
+        <button class="icon-btn" aria-label="Cart" onclick="VQuint.openCartDrawer()"><i
+            class="fa-solid fa-cart-shopping"></i><span class="badge cart-badge" style="display:none;">0</span></button>
+        <a href="profile.html" class="icon-btn" aria-label="Account"><i class="fa-regular fa-user"></i></a>
+        <button class="hamburger" id="menuOpen" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ MOBILE MENU ═══ -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <button class="close-btn" id="menuClose"><i class="fa-solid fa-xmark"></i></button>
+      <a href="#">New In</a>
+      <a href="#">Women</a>
+      <a href="#">Men</a>
+      <a href="#">Accessories</a>
+      <a href="#">Sale</a>
+      <a href="admin.html" style="color: var(--orange); font-weight: 800;">Admin Dashboard</a>
+    </div>
+  </div>
+
+  <!-- ═══ CART DRAWER ═══ -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" onclick="VQuint.closeCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-items" id="cartItemsContainer">
+      <!-- Injected by store.js -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Subtotal</span>
+        <span id="cartTotalAmount">₹0</span>
+      </div>
+      <button class="btn-checkout" onclick="VQuint.processCheckout()">Checkout Securely</button>
+    </div>
+  </div>
+
+  <!-- ═══ SEARCH MODAL ═══ -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass" style="color: var(--gray-400); font-size: 1.2rem;"></i>
+      <input type="text" id="searchInput" placeholder="Search for products, categories..."
+        onkeyup="VQuint.performSearch(this.value)" autocomplete="off" />
+      <button class="search-close" onclick="VQuint.closeSearch()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <!-- Injected by store.js -->
+    </div>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-text">
+        <div class="badge-pill">
+          <span class="dot">✦</span>
+          Spring/Summer '26 Collection is here!
+        </div>
+        <h1>Discover Your <span class="highlight">Signature Style</span> Today</h1>
+        <p>Curated fashion that speaks to your personality. Premium quality, trendsetting designs at prices that make
+          you smile.</p>
+        <div class="hero-btns">
+          <a href="#" class="btn btn-primary">Shop Collection →</a>
+          <a href="#" class="btn btn-outline">Explore Lookbook</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-num">15K+</span>
+            <span class="stat-label">Happy Customers</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">500+</span>
+            <span class="stat-label">Curated Products</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">4.9★</span>
+            <span class="stat-label">Avg Rating</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-img-main">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"
+            alt="Fashion lifestyle — woman with shopping bags" />
+        </div>
+        <div class="hero-float-card card-1">
+          <div class="icon">🔥</div>
+          <div class="info">
+            <strong>Trending Now</strong>
+            <span>2,847 items sold today</span>
+          </div>
+        </div>
+        <div class="hero-float-card card-2">
+          <div class="stars">★★★★★</div>
+          <strong>4.9 / 5.0</strong>
+          <span>12K+ Reviews</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SCROLLING BANNER ═══ -->
+  <div class="scroll-banner">
+    <div class="scroll-track">
+      <span class="item"><span class="sep"></span> FREE SHIPPING OVER ₹999</span>
+      <span class="item"><span class="sep"></span> 30 DAY EASY RETURNS</span>
+      <span class="item"><span class="sep"></span> 100% AUTHENTIC PRODUCTS</span>
+      <span class="item"><span class="sep"></span> SECURE PAYMENTS</span>
+      <span class="item"><span class="sep"></span> EXCLUSIVE MEMBER PERKS</span>
+      <span class="item"><span class="sep"></span> TRENDING ON VQUINT</span>
+      <span class="item"><span class="sep"></span> FREE SHIPPING OVER ₹999</span>
+      <span class="item"><span class="sep"></span> 30 DAY EASY RETURNS</span>
+      <span class="item"><span class="sep"></span> 100% AUTHENTIC PRODUCTS</span>
+      <span class="item"><span class="sep"></span> SECURE PAYMENTS</span>
+      <span class="item"><span class="sep"></span> EXCLUSIVE MEMBER PERKS</span>
+      <span class="item"><span class="sep"></span> TRENDING ON VQUINT</span>
+    </div>
+  </div>
+
+  <!-- ═══ CATEGORIES ═══ -->
+  <section class="categories reveal">
+    <div class="container">
+      <div class="header">
+        <div>
+          <span class="section-label">Browse by Category</span>
+          <h2 class="section-title">Shop What You Love</h2>
+        </div>
+        <a href="#" class="btn btn-outline" style="margin-bottom: 12px;">View All →</a>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card">
+          <div class="cat-icon"><i class="fa-solid fa-person-dress"></i></div>
+          <h4>Dresses</h4>
+          <span>320+ Items</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><i class="fa-solid fa-shoe-prints"></i></div>
+          <h4>Sneakers</h4>
+          <span>180+ Items</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+          <h4>Handbags</h4>
+          <span>95+ Items</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><i class="fa-solid fa-glasses"></i></div>
+          <h4>Sunglasses</h4>
+          <span>140+ Items</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><i class="fa-regular fa-clock"></i></div>
+          <h4>Watches</h4>
+          <span>210+ Items</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><i class="fa-regular fa-gem"></i></div>
+          <h4>Jewelry</h4>
+          <span>260+ Items</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURED PRODUCTS ═══ -->
+  <section class="products reveal">
+    <div class="container">
+      <div class="header">
+        <div>
+          <span class="section-label">Curated for You</span>
+          <h2 class="section-title">Featured Products</h2>
+        </div>
+        <a href="#" class="btn btn-outline" style="margin-bottom: 12px;">View All →</a>
+      </div>
+      <div class="product-tabs">
+        <button class="active">All</button>
+        <button>New Arrivals</button>
+        <button>Best Sellers</button>
+        <button>On Sale</button>
+      </div>
+      <div class="product-grid">
+        <!-- PRODUCT 1 -->
+        <div class="product-card" data-category="new-arrivals" data-product-id="1">
+          <!-- Handled dynamically by JS -->
+        </div>
+        <!-- PRODUCT 2 -->
+        <!-- PRODUCT 2 -->
+        <!-- PRODUCT 3 -->
+        <!-- PRODUCT 3 -->
+        <!-- PRODUCT 4 -->
+        <!-- Dynamic Product Grid will be injected here if we want, or we keep static HTML -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROMO BANNER ═══ -->
+  <section class="promo reveal">
+    <div class="container">
+      <div class="promo-inner">
+        <div class="promo-text">
+          <span class="section-label">Limited Time Offer</span>
+          <h2>Summer Flash Sale — Up&nbsp;to&nbsp;60%&nbsp;Off</h2>
+          <p>Grab the season's most-wanted pieces before they sell out. Premium quality, unbeatable prices — only at
+            VQuint.</p>
+          <div class="promo-timer" id="promoTimer">
+            <div class="time-box"><span class="num" id="days">02</span><span class="lbl">Days</span></div>
+            <div class="time-box"><span class="num" id="hours">14</span><span class="lbl">Hours</span></div>
+            <div class="time-box"><span class="num" id="mins">36</span><span class="lbl">Mins</span></div>
+            <div class="time-box"><span class="num" id="secs">52</span><span class="lbl">Secs</span></div>
+          </div>
+          <a href="#" class="btn">Shop the Sale →</a>
+        </div>
+        <div class="promo-img">
+          <img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=600&q=80"
+            alt="Shopping bags lifestyle" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURES / WHY VQUINT ═══ -->
+  <section class="features reveal">
+    <div class="container">
+      <div style="text-align:center;">
+        <span class="section-label">Why Choose Us</span>
+        <h2 class="section-title">The VQuint Difference</h2>
+        <p class="section-sub" style="margin:0 auto;">We're not just another store — we're your style partner.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="feat-icon"><i class="fa-solid fa-rocket"></i></div>
+          <h4>Express Delivery</h4>
+          <p>Get your order delivered within 2-3 business days, with real-time tracking on every shipment.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="fa-solid fa-rotate"></i></div>
+          <h4>Easy Returns</h4>
+          <p>Changed your mind? No worries. Hassle-free 30-day returns with instant refund processing.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="fa-regular fa-gem"></i></div>
+          <h4>Premium Quality</h4>
+          <p>Every product is hand-picked and quality checked by our expert team before it reaches you.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><i class="fa-solid fa-lock"></i></div>
+          <h4>Secure Payments</h4>
+          <p>Shop with confidence using 256-bit encrypted payment gateways. Your data is always safe.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ REVIEWS ═══ -->
+  <section class="reviews reveal">
+    <div class="container">
+      <div class="header">
+        <span class="section-label">What People Say</span>
+        <h2 class="section-title">Loved by Thousands</h2>
+        <p class="section-sub">Real stories from real customers who made VQuint their go-to fashion destination.</p>
+      </div>
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>"Absolutely love the quality! The floral dress I ordered fits perfectly and the fabric feels luxurious.
+            VQuint is now my go-to for every occasion!"</p>
+          <div class="reviewer">
+            <div class="avatar">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Priya S." />
+            </div>
+            <div class="info">
+              <strong>Priya Sharma</strong>
+              <span>Verified Buyer • Delhi</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>"The sneakers are incredibly comfortable. Fast delivery, great packaging, and the customer service is
+            top-notch. Highly recommend VQuint!"</p>
+          <div class="reviewer">
+            <div class="avatar">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Rahul M." />
+            </div>
+            <div class="info">
+              <strong>Rahul Mehta</strong>
+              <span>Verified Buyer • Mumbai</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>"The rose gold watch exceeded my expectations! The minimalist design is exactly what I was looking for. Got
+            so many compliments on it already."</p>
+          <div class="reviewer">
+            <div class="avatar">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Ananya K." />
+            </div>
+            <div class="info">
+              <strong>Ananya Krishnan</strong>
+              <span>Verified Buyer • Bangalore</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>"I was skeptical about ordering online, but VQuint changed my mind. The leather tote bag is stunning and
+            arrived in perfect condition. 10/10!"</p>
+          <div class="reviewer">
+            <div class="avatar">
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Vikram T." />
+            </div>
+            <div class="info">
+              <strong>Vikram Thakur</strong>
+              <span>Verified Buyer • Pune</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>"Their collection is always on trend. I've ordered multiple times and every single piece has been amazing.
+            The sale prices are unbeatable!"</p>
+          <div class="reviewer">
+            <div class="avatar">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" alt="Neha G." />
+            </div>
+            <div class="info">
+              <strong>Neha Gupta</strong>
+              <span>Verified Buyer • Jaipur</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>"Best sunglasses I've ever owned! Premium build quality and the UV protection is legit. Plus, the case it
+            came with is super stylish too."</p>
+          <div class="reviewer">
+            <div class="avatar">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" alt="Arjun P." />
+            </div>
+            <div class="info">
+              <strong>Arjun Patel</strong>
+              <span>Verified Buyer • Ahmedabad</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ NEWSLETTER ═══ -->
+  <section class="newsletter reveal">
+    <div class="container">
+      <div class="nl-inner">
+        <span class="section-label">Stay in the Loop</span>
+        <h2 class="section-title">Get 15% Off Your First Order</h2>
+        <p class="section-sub">Subscribe to our newsletter for exclusive deals, style tips, and early access to new
+          collections.</p>
+        <form class="nl-form"
+          onsubmit="event.preventDefault(); alert('Welcome to VQuint! Check your inbox for your 15% off code.');">
+          <input type="email" placeholder="Enter your email address" required />
+          <button type="submit"><i class="fa-regular fa-paper-plane"></i> Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo"><i>V</i> vquint</a>
+          <p>Your one-stop destination for curated fashion, premium quality, and unbeatable style. Made with <i
+              class="fa-regular fa-heart"></i> in India.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Shop</h5>
+          <a href="#">New Arrivals</a>
+          <a href="#">Women</a>
+          <a href="#">Men</a>
+          <a href="#">Accessories</a>
+          <a href="#">Sale</a>
+        </div>
+        <div class="footer-col">
+          <h5>Help</h5>
+          <a href="#">Contact Us</a>
+          <a href="#">FAQs</a>
+          <a href="#">Shipping Info</a>
+          <a href="#">Returns & Exchanges</a>
+          <a href="#">Size Guide</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="#">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Blog</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VQuint. All rights reserved.</span>
+        <div class="footer-payments">
+          <span>VISA</span>
+          <span>Mastercard</span>
+          <span>UPI</span>
+          <span>PayPal</span>
+          <span>COD</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ BACK TO TOP ═══ -->
+  <button class="back-top" id="backTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- ═══ JAVASCRIPT ═══ -->
+  <script>
+    // ── MOBILE MENU ──
+    const menuOpen = document.getElementById('menuOpen');
+    const menuClose = document.getElementById('menuClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuOpen.addEventListener('click', () => mobileMenu.classList.add('open'));
+    menuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) mobileMenu.classList.remove('open');
+    });
+
+    // ── BACK TO TOP ──
+    const backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', () => {
+      backTop.classList.toggle('show', window.scrollY > 500);
+    });
+    backTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ── COUNTDOWN TIMER ──
+    (function initTimer() {
+      const end = new Date();
+      end.setDate(end.getDate() + 2);
+      end.setHours(end.getHours() + 14);
+
+      function tick() {
+        const diff = Math.max(0, end - new Date()) / 1000;
+        document.getElementById('days').textContent = String(Math.floor(diff / 86400)).padStart(2, '0');
+        document.getElementById('hours').textContent = String(Math.floor((diff % 86400) / 3600)).padStart(2, '0');
+        document.getElementById('mins').textContent = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+        document.getElementById('secs').textContent = String(Math.floor(diff % 60)).padStart(2, '0');
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+
+    // ── SCROLL REVEAL ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ── NAVBAR SHRINK ON SCROLL ──
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        navbar.style.boxShadow = '0 4px 30px rgba(255,107,44,.08)';
+      } else {
+        navbar.style.boxShadow = 'none';
+      }
+    });
+
+    // ── DYNAMIC PRODUCT INJECTION ──
+    function renderHomepageProducts() {
+      const grid = document.querySelector('.product-grid');
+      const products = VQuint.getProducts();
+
+      let html = '';
+
+      // Optionally just render all 12 products
+      products.forEach(p => {
+        const hasDiscount = p.oldPrice > p.price;
+        const badgeHTML = p.badge ? `<span class="card-badge ${p.badge === 'NEW' ? 'new' : p.badge === 'HOT' ? 'hot' : 'sale'}">${p.badge}</span>` : '';
+        const isWishlisted = VQuint.getWishlist().includes(String(p.id));
+        const heartClass = isWishlisted ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+        const heartStyle = isWishlisted ? 'style="color: var(--coral); background: var(--peach);"' : '';
+
+        // Use generic categories for the filter tabs
+        let filterCat = 'all';
+        if (p.badge === 'NEW') filterCat = 'new-arrivals';
+        if (p.badge === 'HOT') filterCat = 'best-sellers';
+        if (hasDiscount && p.badge !== 'NEW' && p.badge !== 'HOT') filterCat = 'on-sale';
+
+        html += `
+          <div class="product-card" data-category="${filterCat}" data-product-id="${p.id}">
+            ${badgeHTML}
+            <div class="card-actions">
+              <button aria-label="Wishlist" onclick="event.stopPropagation(); VQuint.toggleWishlist('${p.id}'); this.innerHTML = '<i class=\\'fa-solid fa-heart\\' style=\\'color: var(--coral)\\' ></i>';"><i class="${heartClass}"></i></button>
+              <button aria-label="Quick View" onclick="event.stopPropagation(); window.location.href='product-detail.html?id=${p.id}';"><i class="fa-regular fa-eye"></i></button>
+            </div>
+            <div class="card-img" onclick="sessionStorage.setItem('selectedProduct', JSON.stringify(VQuint.getProduct('${p.id}'))); window.location.href='product-detail.html?id=${p.id}';">
+              <img src="${p.image}" alt="${p.name}" />
+            </div>
+            <div class="card-body" onclick="sessionStorage.setItem('selectedProduct', JSON.stringify(VQuint.getProduct('${p.id}'))); window.location.href='product-detail.html?id=${p.id}';">
+              <div class="card-cat">${p.category}</div>
+              <h3>${p.name}</h3>
+              <div class="card-rating">
+                <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></span>
+                <span>(${p.reviews})</span>
+              </div>
+              <div class="card-price">
+                <span class="price">₹${p.price.toLocaleString()}</span>
+                ${hasDiscount ? `<span class="old-price">₹${p.oldPrice.toLocaleString()}</span>` : ''}
+              </div>
+              <button class="card-add" onclick="event.stopPropagation(); VQuint.addToCart('${p.id}', 1);">Add to Cart</button>
+            </div>
+          </div>
+        `;
+      });
+      grid.innerHTML = html;
+
+      // Re-bind filter logic to new dynamic cards
+      const freshCards = document.querySelectorAll('.product-card');
+      const allBtns = document.querySelectorAll('.product-tabs button');
+      allBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          allBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const txt = btn.textContent.trim();
+          let filterCat = null;
+          if (txt === 'New Arrivals') filterCat = 'new-arrivals';
+          if (txt === 'Best Sellers') filterCat = 'best-sellers';
+          if (txt === 'On Sale') filterCat = 'on-sale';
+
+          freshCards.forEach(card => {
+            if (filterCat === null || card.dataset.category === filterCat) {
+              card.style.display = 'block';
+              setTimeout(() => card.style.opacity = '1', 10);
+            } else {
+              card.style.opacity = '0';
+              setTimeout(() => card.style.display = 'none', 300);
+            }
+          });
+        });
+      });
+    }
+
+    // Initialize Store UI
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHomepageProducts();
+      VQuint.updateCartBages();
+      VQuint.updateWishlistBadges();
+      VQuint.renderCartDrawer();
+
+      // Read Hash for Navigation Filters
+      if (window.location.hash) {
+        const hash = window.location.hash.substring(1);
+        const tabs = document.querySelectorAll('.product-tabs button');
+        if (hash === 'new-arrivals') tabs[1].click();
+        else if (hash === 'best-sellers') tabs[2].click();
+        else if (hash === 'sale') tabs[3].click();
+
+        // Scroll to grid
+        document.querySelector('.products').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+  </script>
+</body>
+
+</html>

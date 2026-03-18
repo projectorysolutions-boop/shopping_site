@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Profile — VQuint</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="js/store.js"></script>
+  <style>
+    /* ───────── RESET & BASE ───────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--off-white); }
+    ::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+    
+    :root {
+      --orange: #FF6B2C;
+      --orange-light: #FF8F5E;
+      --coral: #FF8A7A;
+      --peach: #FFEAE6;
+      --off-white: #FFF9F6;
+      --white: #FFFFFF;
+      --dark: #1A1A2E;
+      --gray-800: #2D2D3F;
+      --gray-600: #6B6B80;
+      --gray-400: #A0A0B2;
+      --gray-200: #E8E8EE;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --shadow-sm: 0 2px 12px rgba(255,107,44,.08);
+      --shadow-md: 0 8px 30px rgba(255,107,44,.10);
+      --transition: .35s cubic-bezier(.4,0,.2,1);
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; border: none; font-family: inherit; }
+    .container { width: 92%; max-width: 1280px; margin: 0 auto; }
+
+    /* ── NAVBAR ── */
+    .navbar { position: sticky; top: 0; z-index: 100; background: rgba(255,249,246,.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,107,44,.06); padding: 0; }
+    .navbar .container { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .logo { font-family: 'DM Serif Display', serif; font-size: 1.7rem; color: var(--dark); display: flex; align-items: center; gap: 6px; }
+    .logo i { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--orange), var(--coral)); display: grid; place-items: center; color: var(--white); font-style: normal; font-size: .9rem; font-weight: 800; }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { font-size: .9rem; font-weight: 600; color: var(--gray-600); position: relative; transition: var(--transition); }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--orange); border-radius: 2px; transition: var(--transition); }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-actions { display: flex; align-items: center; gap: 20px; }
+    .nav-actions .icon-btn { width: 42px; height: 42px; border-radius: 50%; background: var(--white); display: grid; place-items: center; box-shadow: var(--shadow-sm); transition: var(--transition); position: relative; font-size: 1.1rem; }
+    .nav-actions .icon-btn:hover { background: var(--orange); color: var(--white); transform: translateY(-2px); }
+    .nav-actions .icon-btn .badge { position: absolute; top: -2px; right: -2px; width: 18px; height: 18px; border-radius: 50%; background: var(--coral); color: var(--white); font-size: .65rem; font-weight: 700; display: grid; place-items: center; }
+
+    /* ───────── CART DRAWER & SEARCH (Copied from index) ───────── */
+    .cart-drawer { position: fixed; top: 0; right: 0; width: 100%; max-width: 400px; height: 100vh; background: var(--white); z-index: 9999; box-shadow: -10px 0 40px rgba(0,0,0,0.1); transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-header { padding: 24px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; }
+    .cart-header h3 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; }
+    .cart-close { background: none; font-size: 1.2rem; color: var(--gray-600); transition: 0.2s; }
+    .cart-close:hover { color: var(--dark); }
+    .cart-items { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+    .cart-item { display: flex; gap: 16px; align-items: flex-start; }
+    .cart-item img { width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-sm); }
+    .cart-item-details { flex: 1; }
+    .cart-item-details h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+    .cart-item-meta { font-size: 0.75rem; color: var(--gray-400); margin-bottom: 8px; }
+    .cart-item-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .cart-item-price { font-weight: 700; color: var(--orange); }
+    .cart-qty-ctrl { display: flex; align-items: center; gap: 10px; border: 1px solid var(--gray-200); border-radius: 40px; padding: 4px 10px; }
+    .cart-qty-ctrl button { background: none; font-size: 1rem; color: var(--gray-600); }
+    .cart-qty-ctrl span { font-size: 0.85rem; font-weight: 700; }
+    .cart-item-remove { background: none; color: var(--gray-400); transition: 0.2s; }
+    .cart-item-remove:hover { color: var(--coral); }
+    .empty-cart { text-align: center; color: var(--gray-400); padding: 40px 0; }
+    .empty-cart i { font-size: 3rem; margin-bottom: 16px; color: var(--peach); }
+    .cart-footer { padding: 24px; border-top: 1px solid var(--gray-200); background: var(--off-white); }
+    .cart-total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; }
+    .btn-checkout { width: 100%; background: var(--dark); padding: 16px; border-radius: 60px; color: var(--white); font-weight: 700; text-align: center; transition: 0.2s; }
+    .btn-checkout:hover { background: var(--orange); }
+    /* ───────── SEARCH MODAL (Compact Dropdown) ───────── */
+    .search-modal { position: fixed; top: 76px; right: 4%; width: 400px; max-width: 90vw; background: var(--white); border-radius: var(--radius-sm); z-index: 10000; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; transform: translateY(-10px); box-shadow: var(--shadow-lg); border: 1px solid var(--gray-200); }
+    .search-modal.open { opacity: 1; pointer-events: auto; transform: translateY(10px); }
+    .search-box { padding: 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--gray-200); }
+    .search-box input { flex: 1; border: none; font-size: 1.1rem; font-family: inherit; font-weight: 600; outline: none; background: transparent; }
+    .search-close { font-size: 1.2rem; background: none; color: var(--gray-600); }
+    .search-results { max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; padding: 10px; }
+    .search-result-item { display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: 8px; transition: 0.2s; }
+    .search-result-item:hover { background: var(--off-white); }
+    .search-result-item img { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; }
+    .search-result-info h4 { font-size: 0.9rem; margin-bottom: 4px; color: var(--dark); }
+    .search-result-info span { font-weight: 700; color: var(--orange); font-size: 0.85rem; }
+    .search-no-results { color: var(--gray-600); font-size: 0.95rem; text-align: center; padding: 20px; width: 100%; }
+
+    /* ── PROFILE PAGE ── */
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      padding: 60px 0 100px;
+    }
+    
+    .sidebar { background: var(--white); border-radius: var(--radius); padding: 32px 24px; box-shadow: var(--shadow-sm); height: fit-content; }
+    .user-card { text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--gray-200); }
+    .avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), var(--coral)); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; margin: 0 auto 16px; }
+    .user-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; color: var(--dark); }
+    .user-card p { font-size: .85rem; color: var(--gray-600); }
+    .sidebar-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .sidebar-menu li a { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: var(--radius-sm); color: var(--gray-600); font-weight: 600; font-size: .95rem; transition: var(--transition); }
+    .sidebar-menu li a i { font-size: 1.1rem; width: 24px; text-align: center; }
+    .sidebar-menu li a:hover, .sidebar-menu li a.active { background: var(--peach); color: var(--orange); }
+
+    .content-area { display: flex; flex-direction: column; gap: 40px; }
+    .section-box { background: var(--white); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow-sm); }
+    .section-header { margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; }
+    .section-header h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--dark); }
+    .edit-btn { background: none; color: var(--orange); font-weight: 700; font-size: .9rem; border: 1px solid var(--orange); padding: 8px 16px; border-radius: 40px; transition: var(--transition); }
+    .edit-btn:hover { background: var(--orange); color: var(--white); }
+    
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+    .info-item label { display: block; font-size: .8rem; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .info-item p { font-size: 1rem; color: var(--dark); font-weight: 600; }
+    
+    .address-card { border: 1px solid var(--gray-200); border-radius: var(--radius-sm); padding: 24px; position: relative; }
+    .address-badge { position: absolute; top: 24px; right: 24px; background: var(--peach); color: var(--orange); font-size: .75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+    .address-card h4 { font-size: 1.1rem; margin-bottom: 12px; }
+    .address-card p { color: var(--gray-600); font-size: .95rem; line-height: 1.6; margin-bottom: 16px; }
+
+    .order-list { display: flex; flex-direction: column; gap: 20px; }
+    .order-item { border: 1px solid var(--gray-200); border-radius: var(--radius-sm); padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .order-info h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .order-info p { font-size: .9rem; color: var(--gray-600); margin-bottom: 4px; }
+    .order-status { display: inline-block; padding: 6px 14px; border-radius: 40px; font-size: .8rem; font-weight: 700; }
+    .status-delivered { background: #e6f9e6; color: #28a745; }
+    .status-processing { background: #fff4e6; color: #fd7e14; }
+    .order-price { font-size: 1.2rem; font-weight: 800; color: var(--dark); }
+    .btn-view { background: var(--off-white); color: var(--dark); border: 1px solid var(--gray-200); padding: 10px 20px; border-radius: 40px; font-weight: 600; font-size: .9rem; transition: var(--transition); }
+    .btn-view:hover { background: var(--dark); color: var(--white); }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--dark); color: rgba(255,255,255,.7); padding: 60px 0 0; margin-top: 40px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 40px; margin-bottom: 48px; }
+    .footer-brand .logo { color: var(--white); margin-bottom: 16px; font-family: 'DM Serif Display', serif; font-size: 1.7rem; display: flex; align-items: center; gap: 6px; }
+    .footer-brand .logo i { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--orange), var(--coral)); display: grid; place-items: center; color: var(--white); font-style: normal; font-size: .9rem; font-weight: 800; }
+    .footer-brand p { font-size: .88rem; line-height: 1.7; margin-bottom: 24px; max-width: 280px; }
+    .footer-social { display: flex; gap: 12px; }
+    .footer-social a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.08); display: grid; place-items: center; font-size: .9rem; transition: var(--transition); }
+    .footer-social a:hover { background: var(--orange); color: var(--white); transform: translateY(-3px); }
+    .footer-col h5 { color: var(--white); font-size: .9rem; font-weight: 700; margin-bottom: 20px; }
+    .footer-col a { display: block; font-size: .85rem; padding: 6px 0; transition: var(--transition); }
+    .footer-col a:hover { color: var(--orange); padding-left: 6px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 24px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: .82rem; }
+    .footer-payments { display: flex; gap: 12px; }
+    .footer-payments span { padding: 4px 12px; border-radius: 6px; background: rgba(255,255,255,.08); font-size: .75rem; font-weight: 600; }
+
+    @media (max-width: 900px) {
+      .profile-layout { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo"><i>V</i> vquint</a>
+      <ul class="nav-links">
+        <li><a href="index.html#new-arrivals">New In</a></li>
+        <li><a href="index.html#women">Women</a></li>
+        <li><a href="index.html#men">Men</a></li>
+        <li><a href="index.html#accessories">Accessories</a></li>
+        <li><a href="admin.html" style="color: var(--orange); font-weight: 800;">Admin</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn" aria-label="Search" onclick="VQuint.openSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <a href="wishlist.html" class="icon-btn" aria-label="Wishlist"><i class="fa-regular fa-heart"></i><span class="badge wishlist-badge" style="display:none;">0</span></a>
+        <button class="icon-btn" aria-label="Cart" onclick="VQuint.openCartDrawer()"><i class="fa-solid fa-cart-shopping"></i><span class="badge cart-badge" style="display:none;">0</span></button>
+        <a href="profile.html" class="icon-btn" aria-label="Account" style="background:var(--orange); color:white;"><i class="fa-regular fa-user"></i></a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ CART DRAWER ═══ -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" onclick="VQuint.closeCartDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="cart-items" id="cartItemsContainer"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Subtotal</span>
+        <span id="cartTotalAmount">₹0</span>
+      </div>
+      <button class="btn-checkout" onclick="VQuint.processCheckout()">Checkout Securely</button>
+    </div>
+  </div>
+
+  <!-- ═══ SEARCH MODAL ═══ -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass" style="color: var(--gray-400); font-size: 1.2rem;"></i>
+      <input type="text" id="searchInput" placeholder="Search for products, categories..." onkeyup="VQuint.performSearch(this.value)" autocomplete="off" />
+      <button class="search-close" onclick="VQuint.closeSearch()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <!-- ═══ PROFILE LAYOUT ═══ -->
+  <div class="container profile-layout">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="user-card">
+        <div class="avatar" id="userInitials">J</div>
+        <h3 id="userName">John Sharma</h3>
+        <p id="userEmail">john.s@example.com</p>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="#details" class="active"><i class="fa-regular fa-id-card"></i> My Details</a></li>
+        <li><a href="#orders"><i class="fa-solid fa-box-open"></i> Order History</a></li>
+        <li><a href="#addresses"><i class="fa-solid fa-location-dot"></i> Addresses</a></li>
+        <li><a href="wishlist.html"><i class="fa-regular fa-heart"></i> Wishlist</a></li>
+        <li><a href="#" style="color: var(--coral);"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content-area">
+      
+      <!-- Details Section -->
+      <section class="section-box" id="details">
+        <div class="section-header">
+          <h2>Personal Details</h2>
+          <button class="edit-btn">Edit Profile</button>
+        </div>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Full Name</label>
+            <p id="infoName">John Sharma</p>
+          </div>
+          <div class="info-item">
+            <label>Email Address</label>
+            <p id="infoEmail">john.s@example.com</p>
+          </div>
+          <div class="info-item">
+            <label>Phone Number</label>
+            <p id="infoPhone">+91 98765 43210</p>
+          </div>
+          <div class="info-item">
+            <label>Joined</label>
+            <p id="infoJoin">Jan 2025</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Addresses Section -->
+      <section class="section-box" id="addresses">
+        <div class="section-header">
+          <h2>Saved Addresses</h2>
+          <button class="edit-btn">Add New</button>
+        </div>
+        <div class="info-grid">
+          <div class="address-card">
+            <span class="address-badge">Default</span>
+            <h4>Home</h4>
+            <p id="infoAddress">123 Fashion Street, Tech Park,<br>Bangalore 560001,<br>Karnataka, India</p>
+            <div style="display:flex; gap: 16px;">
+              <button style="color: var(--orange); font-weight:600; background:none;">Edit</button>
+              <button style="color: var(--coral); font-weight:600; background:none;">Remove</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Orders Section -->
+      <section class="section-box" id="orders">
+        <div class="section-header">
+          <h2>Order History</h2>
+        </div>
+        <div class="order-list" id="profileOrdersList">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo"><i>V</i> vquint</a>
+          <p>Your one-stop destination for curated fashion, premium quality, and unbeatable style. Made with <i class="fa-regular fa-heart"></i> in India.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Shop</h5>
+          <a href="#">New Arrivals</a>
+          <a href="#">Women</a>
+          <a href="#">Men</a>
+          <a href="#">Accessories</a>
+        </div>
+        <div class="footer-col">
+          <h5>Help</h5>
+          <a href="#">Contact Us</a>
+          <a href="#">Shipping Info</a>
+          <a href="#">Returns & Exchanges</a>
+          <a href="#">Size Guide</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="#">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VQuint. All rights reserved.</span>
+        <div class="footer-payments">
+          <span>VISA</span>
+          <span>Mastercard</span>
+          <span>UPI</span>
+          <span>PayPal</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Setup general stores
+      VQuint.updateCartBages();
+      VQuint.updateWishlistBadges();
+      VQuint.renderCartDrawer();
+
+      // Setup User details
+      const user = VQuint.getUser();
+      if(user) {
+        document.getElementById('userName').textContent = user.name;
+        document.getElementById('userEmail').textContent = user.email;
+        document.getElementById('userInitials').textContent = user.name.charAt(0);
+        
+        document.getElementById('infoName').textContent = user.name;
+        document.getElementById('infoEmail').textContent = user.email;
+        document.getElementById('infoPhone').textContent = user.phone;
+        document.getElementById('infoJoin').textContent = user.joinDate;
+        document.getElementById('infoAddress').textContent = user.address;
+      }
+
+      // Sidebar logic (Visual only)
+      const tabs = document.querySelectorAll('.sidebar-menu a:not([href="wishlist.html"]):not([style])');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const target = tab.getAttribute('href').substring(1);
+          document.getElementById(target).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Render Orders
+      const ordersContainer = document.getElementById('profileOrdersList');
+      if (ordersContainer) {
+        const userOrders = JSON.parse(localStorage.getItem('vq_orders')) || [
+          { id: "#ORD-987654", date: "Oct 12, 2024", total: 4299, status: "Delivered", items: [] },
+          { id: "#ORD-987612", date: "Sep 28, 2024", total: 1899, status: "Delivered", items: [] },
+          { id: "#ORD-987590", date: "Sep 15, 2024", total: 8500, status: "Returned", items: [] }
+        ];
+
+        if (userOrders.length === 0) {
+          ordersContainer.innerHTML = '<p style="color:var(--gray-500); padding: 20px 0;">No orders found.</p>';
+        } else {
+          ordersContainer.innerHTML = userOrders.map(order => {
+            const statusClass = order.status.toLowerCase() === 'delivered' ? 'status-delivered' : 
+                                order.status.toLowerCase() === 'returned' ? 'status-returned' : 'status-processing';
+            const itemCount = order.items ? order.items.reduce((sum, item) => sum + item.qty, 0) : 1;
+            return `
+              <div class="order-item">
+                <div class="order-info">
+                  <h4>Order ${order.id}</h4>
+                  <p>Placed on ${order.date}</p>
+                  <span class="order-status ${statusClass}">${order.status}</span>
+                </div>
+                <div>
+                  <p style="color: var(--gray-600); font-size:.9rem; margin-bottom: 6px;">${itemCount} Item${itemCount > 1 ? 's' : ''}</p>
+                  <div class="order-price">₹${order.total.toLocaleString()}</div>
+                </div>
+                <button class="btn-view" onclick="alert('Viewing details for ${order.id}')">View Details</button>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
