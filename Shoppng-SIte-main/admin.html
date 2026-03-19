@@ -463,12 +463,141 @@
         .status-delivered { background: #E8F8F5; color: #2ECC71; }
         .status-pending { background: #FEF9E7; color: #F1C40F; }
         .status-shipped { background: #EBF5FB; color: #3498DB; }
+
+        .hamburger {
+            display: none;
+        }
+
+        /* ───────── MOBILE RESPONSIVENESS ───────── */
+        @media (max-width: 1024px) {
+            .dashboard-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                height: auto;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 280px;
+                transform: translateX(-100%);
+                transition: var(--transition);
+                box-shadow: 10px 0 40px rgba(0,0,0,0.1);
+                padding-top: 80px;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.3);
+                z-index: 9;
+                display: none;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+
+            .main-content {
+                padding: 24px 16px;
+                width: 100%;
+                min-height: 100vh;
+            }
+
+            .header {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+                flex: 1;
+            }
+
+            .admin-profile {
+                padding: 6px;
+            }
+
+            .admin-profile span {
+                display: none;
+            }
+
+            .hamburger {
+                display: grid;
+                place-items: center;
+                font-size: 1.3rem;
+                color: var(--dark);
+                background: var(--white);
+                width: 42px;
+                height: 42px;
+                border-radius: 12px;
+                box-shadow: var(--shadow-sm);
+            }
+
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .panel {
+                padding: 20px 16px;
+                overflow-x: auto;
+            }
+
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .modal {
+                padding: 24px 16px;
+                width: 95%;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
-    <aside class="sidebar">
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo"><i>V</i> vquint admin</div>
         <ul class="nav-menu">
             <li class="nav-item active" onclick="switchPanel('products')"><i class="fa-solid fa-box"></i> Products</li>
@@ -481,7 +610,8 @@
 
     <main class="main-content">
         <header class="header">
-            <h1>Product Management</h1>
+            <button class="hamburger" id="adminHamburger" onclick="toggleSidebar(true)"><i class="fa-solid fa-bars"></i></button>
+            <h1 id="panelTitle">Product Management</h1>
             <div class="admin-profile">
                 <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Admin" />
                 <span>Admin Dashboard</span>
@@ -939,6 +1069,8 @@
                 item.classList.remove('active');
                 if (item.innerText.toLowerCase().includes(panelId)) {
                     item.classList.add('active');
+                    // Update Header Title
+                    document.getElementById('panelTitle').innerText = item.innerText.trim();
                 }
             });
 
@@ -951,15 +1083,24 @@
             // Render specific tabular data depending on tab
             if(panelId === 'orders') renderAdminOrders();
 
-            // Update Header Title
-            const titles = {
-                'products': 'Product Management',
-                'analytics': 'Sales Analytics',
-                'customers': 'Customer Directory',
-                'orders': 'Order Management',
-                'settings': 'Dashboard Settings'
-            };
-            document.querySelector('.header h1').innerText = titles[panelId] || 'Admin Dashboard';
+            // Close sidebar on mobile
+            if (window.innerWidth <= 768) {
+                toggleSidebar(false);
+            }
+        }
+
+        function toggleSidebar(open) {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (open) {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         }
 
         // Initial render

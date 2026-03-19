@@ -606,36 +606,28 @@
 
     /* ───────── HERO ───────── */
     .hero {
-      padding: 60px 0 80px;
+      padding: 80px 0 100px;
       position: relative;
       overflow: hidden;
+      background: var(--off-white);
     }
 
     .hero::before {
       content: '';
       position: absolute;
-      top: -200px;
-      right: -200px;
-      width: 600px;
-      height: 600px;
+      top: -15%;
+      right: -10%;
+      width: 700px;
+      height: 700px;
       background: radial-gradient(circle, var(--peach) 0%, transparent 70%);
+      filter: blur(80px);
       z-index: 0;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -100px;
-      left: -100px;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(255, 138, 122, .15) 0%, transparent 70%);
-      z-index: 0;
+      opacity: 0.6;
     }
 
     .hero .container {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: 60px;
       align-items: center;
       position: relative;
@@ -645,55 +637,55 @@
     .hero-text .badge-pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      padding: 8px 18px 8px 8px;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 107, 44, 0.15);
+      padding: 8px 16px;
       border-radius: 60px;
-      font-size: .82rem;
-      font-weight: 600;
-      color: var(--gray-600);
-      margin-bottom: 28px;
-      box-shadow: var(--shadow-sm);
-      animation: float 3s ease-in-out infinite;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 32px;
+      box-shadow: 0 4px 15px rgba(255, 107, 44, 0.05);
     }
 
     .hero-text .badge-pill .dot {
-      width: 28px;
-      height: 28px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--orange), var(--coral));
-      display: grid;
-      place-items: center;
-      color: var(--white);
-      font-size: .7rem;
+      background: var(--orange);
+      position: relative;
     }
 
-    @keyframes float {
+    .hero-text .badge-pill .dot::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: var(--orange);
+      opacity: 0.4;
+      animation: pulse 2s infinite;
+    }
 
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-6px);
-      }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.4; }
+      100% { transform: scale(2.5); opacity: 0; }
     }
 
     .hero-text h1 {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.6rem, 6vw, 4.2rem);
-      line-height: 1.1;
+      font-size: clamp(3rem, 7vw, 5rem);
+      line-height: 1.05;
       margin-bottom: 24px;
       color: var(--dark);
+      letter-spacing: -1px;
     }
 
     .hero-text h1 .highlight {
-      background: linear-gradient(135deg, var(--orange), var(--coral));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      display: block;
+      color: var(--orange);
+      font-style: italic;
     }
 
     .hero-text p {
@@ -744,42 +736,49 @@
 
     .hero-img-main {
       width: 100%;
-      max-width: 520px;
-      border-radius: 30px;
+      height: 600px;
+      border-radius: 40px 40px 0 40px;
       overflow: hidden;
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.12);
       position: relative;
     }
 
     .hero-img-main img {
       width: 100%;
-      height: 520px;
+      height: 100%;
       object-fit: cover;
+      transition: transform 1s ease;
+    }
+
+    .hero-img-main:hover img {
+      transform: scale(1.05);
     }
 
     .hero-float-card {
       position: absolute;
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      box-shadow: var(--shadow-md);
-      animation: float 4s ease-in-out infinite;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      z-index: 2;
     }
 
     .hero-float-card.card-1 {
-      bottom: 40px;
-      left: -40px;
+      bottom: 60px;
+      left: -60px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      animation-delay: .5s;
+      gap: 16px;
+      width: 240px;
     }
 
     .hero-float-card.card-1 .icon {
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--orange), var(--coral));
+      background: var(--orange);
       display: grid;
       place-items: center;
       color: var(--white);
@@ -788,35 +787,35 @@
 
     .hero-float-card.card-1 .info strong {
       display: block;
-      font-size: .85rem;
+      font-size: .9rem;
     }
 
     .hero-float-card.card-1 .info span {
-      font-size: .75rem;
+      font-size: .78rem;
       color: var(--gray-400);
     }
 
     .hero-float-card.card-2 {
-      top: 30px;
-      right: -30px;
+      top: 40px;
+      right: -40px;
       text-align: center;
-      animation-delay: 1s;
+      width: 140px;
     }
 
     .hero-float-card.card-2 .stars {
       color: #FFBE2E;
-      font-size: .9rem;
+      font-size: 0.8rem;
       margin-bottom: 4px;
     }
 
     .hero-float-card.card-2 strong {
-      font-size: .85rem;
+      display: block;
+      font-size: 1.1rem;
     }
 
     .hero-float-card.card-2 span {
-      font-size: .72rem;
+      font-size: 0.75rem;
       color: var(--gray-400);
-      display: block;
     }
 
     /* ───────── SCROLLING BANNER ───────── */
@@ -1598,8 +1597,9 @@
       position: fixed;
       inset: 0;
       z-index: 200;
-      background: rgba(0, 0, 0, .5);
-      backdrop-filter: blur(6px);
+      background: var(--white);
+      overflow-y: auto;
+      padding: 60px 0;
     }
 
     .mobile-menu.open {
@@ -1607,23 +1607,14 @@
     }
 
     .mobile-menu-inner {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 80%;
-      max-width: 360px;
-      height: 100%;
-      background: var(--white);
-      padding: 32px;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 32px;
-      transform: translateX(100%);
-      transition: var(--transition);
-    }
-
-    .mobile-menu.open .mobile-menu-inner {
-      transform: translateX(0);
+      text-align: center;
     }
 
     .mobile-menu-inner .close-btn {
@@ -1694,26 +1685,64 @@
     }
 
     @media (max-width: 768px) {
+      .navbar .container {
+        height: 64px;
+        padding: 0 16px;
+      }
+
       .nav-links {
         display: none;
       }
 
+      .nav-actions {
+        gap: 12px;
+      }
+
+      .nav-actions .icon-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+      }
+
       .hamburger {
         display: flex;
+        padding: 4px;
       }
 
       .hero-text h1 {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-btns .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero-img-main {
+        height: 480px;
+        border-radius: 30px;
       }
 
       .hero-float-card.card-1 {
-        left: 10px;
+        left: 0;
         bottom: 20px;
+        width: 200px;
+        padding: 12px;
       }
 
       .hero-float-card.card-2 {
-        right: 10px;
-        top: 10px;
+        right: 0;
+        top: 20px;
+        width: 120px;
+        padding: 12px;
       }
 
       .product-grid {
@@ -1756,24 +1785,46 @@
     }
 
     @media (max-width: 480px) {
+      .nav-actions .icon-btn[aria-label="Search"],
+      .nav-actions .icon-btn[aria-label="Wishlist"] {
+        display: none;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+      }
+
       .hero {
-        padding: 40px 0 60px;
+        padding: 30px 0 40px;
       }
 
       .hero-text h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
       }
 
       .hero-stats {
-        gap: 24px;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero-img-main {
+        height: 380px;
       }
 
       .hero-img-main img {
-        height: 360px;
+        height: 100%;
       }
 
       .cat-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      @media (min-width: 430px) {
+        .cat-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
 
       .product-grid {
@@ -1786,6 +1837,14 @@
       opacity: 0;
       transform: translateY(40px);
       transition: opacity .8s ease, transform .8s ease;
+    }
+
+    @media (max-width: 768px) {
+      .reveal {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        transition: none !important;
+      }
     }
 
     .reveal.visible {
@@ -1838,12 +1897,14 @@
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
       <button class="close-btn" id="menuClose"><i class="fa-solid fa-xmark"></i></button>
-      <a href="#">New In</a>
-      <a href="#">Women</a>
-      <a href="#">Men</a>
-      <a href="#">Accessories</a>
-      <a href="#">Sale</a>
-      <a href="admin.html" style="color: var(--orange); font-weight: 800;">Admin Dashboard</a>
+      <a href="index.html#new-arrivals">New In</a>
+      <a href="index.html#women">Women</a>
+      <a href="index.html#men">Men</a>
+      <a href="index.html#accessories">Accessories</a>
+      <hr style="border: none; height: 1px; background: rgba(26,26,46,0.1); margin: 10px 0;">
+      <a href="wishlist.html"><i class="fa-regular fa-heart"></i> Wishlist</a>
+      <a href="profile.html"><i class="fa-regular fa-user"></i> Account</a>
+      <a href="admin.html">Admin Dashboard</a>
     </div>
   </div>
 
@@ -1883,7 +1944,7 @@
     <div class="container">
       <div class="hero-text">
         <div class="badge-pill">
-          <span class="dot">✦</span>
+          <span class="dot"></span>
           Spring/Summer '26 Collection is here!
         </div>
         <h1>Discover Your <span class="highlight">Signature Style</span> Today</h1>
@@ -1910,20 +1971,20 @@
       </div>
       <div class="hero-visual">
         <div class="hero-img-main">
-          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"
-            alt="Fashion lifestyle — woman with shopping bags" />
+          <img src="hero-main.png"
+            alt="Fashion lifestyle — elegant campaign photography" />
         </div>
         <div class="hero-float-card card-1">
-          <div class="icon">🔥</div>
+          <div class="icon">✨</div>
           <div class="info">
-            <strong>Trending Now</strong>
-            <span>2,847 items sold today</span>
+            <strong>Curated Designs</strong>
+            <span>Hand-picked by experts</span>
           </div>
         </div>
         <div class="hero-float-card card-2">
           <div class="stars">★★★★★</div>
           <strong>4.9 / 5.0</strong>
-          <span>12K+ Reviews</span>
+          <span>Top Rated Store</span>
         </div>
       </div>
     </div>
@@ -2260,14 +2321,7 @@
   <!-- ═══ JAVASCRIPT ═══ -->
   <script>
     // ── MOBILE MENU ──
-    const menuOpen = document.getElementById('menuOpen');
-    const menuClose = document.getElementById('menuClose');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuOpen.addEventListener('click', () => mobileMenu.classList.add('open'));
-    menuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target === mobileMenu) mobileMenu.classList.remove('open');
-    });
+    VQuint.initMobileMenu();
 
     // ── BACK TO TOP ──
     const backTop = document.getElementById('backTop');
@@ -2304,7 +2358,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.05 });
     reveals.forEach(el => observer.observe(el));
 
     // ── NAVBAR SHRINK ON SCROLL ──

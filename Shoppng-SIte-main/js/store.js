@@ -10,7 +10,7 @@ const initialProducts = [
     category: 'Women • Dresses',
     rating: 5,
     reviews: 128,
-    image: 'https://images.unsplash.com/photo-1515347619252-7cd1cbbfd3cb?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=80',
     badge: 'NEW',
     description: 'A beautiful floral summer midi dress perfect for warm weather. Made from premium cotton fabric with a comfortable fit. Ideal for casual outings, beach trips, or evening events.'
   },
@@ -22,7 +22,7 @@ const initialProducts = [
     category: 'Men • Sneakers',
     rating: 5,
     reviews: 342,
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80',
     badge: '-40%',
     description: 'Premium running sneakers with advanced cushioning technology. Features lightweight design, breathable mesh upper, and excellent grip. Perfect for both casual wear and sports activities.'
   },
@@ -34,7 +34,7 @@ const initialProducts = [
     category: 'Women • Handbags',
     rating: 4,
     reviews: 89,
-    image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=800&q=80',
     badge: 'HOT',
     description: 'Elegant leather tote bag crafted from genuine Italian leather. Spacious interior compartments, durable handles, and timeless design. A versatile accessory for work or travel.'
   },
@@ -46,7 +46,7 @@ const initialProducts = [
     category: 'Unisex • Watches',
     rating: 5,
     reviews: 215,
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=800&q=80',
     badge: 'NEW',
     description: 'Stunning minimalist watch with rose gold finish. Precision quartz movement, water-resistant design, and elegant styling. Pairs well with any outfit.'
   },
@@ -58,19 +58,19 @@ const initialProducts = [
     category: 'Men • Outerwear',
     rating: 4,
     reviews: 145,
-    image: 'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=800&q=80',
     badge: '',
     description: 'Classic vintage washed denim jacket. Features metal button closures, dual chest pockets, and a timeless fit that gets better with age.'
   },
   {
     id: "6",
-    name: 'Silk Blend Blouse',
+    name: 'Yellow top and pants',
     price: 1599,
     oldPrice: 2499,
     category: 'Women • Tops',
     rating: 5,
     reviews: 67,
-    image: 'https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80',
     badge: 'NEW',
     description: 'Luxurious silk blend blouse with a gentle drape. Elegant V-neck design perfect for office wear or evening dinners. Soft, breathable, and chic.'
   },
@@ -82,7 +82,7 @@ const initialProducts = [
     category: 'Unisex • Bags',
     rating: 4,
     reviews: 112,
-    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800&q=80',
     badge: '-25%',
     description: 'Durable canvas weekender bag with vegan leather trims. Roomy main compartment, perfect for short trips and gym sessions. Includes a detachable shoulder strap.'
   },
@@ -94,7 +94,7 @@ const initialProducts = [
     category: 'Unisex • Accessories',
     rating: 5,
     reviews: 230,
-    image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80',
     badge: 'HOT',
     description: 'Classic aviator sunglasses with polarized lenses for ultimate UV protection. Lightweight metal frame for all-day comfort.'
   },
@@ -106,7 +106,7 @@ const initialProducts = [
     category: 'Men • Activewear',
     rating: 4,
     reviews: 88,
-    image: 'https://images.unsplash.com/photo-1591557304193-4556dfbf1ef0?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80',
     badge: '',
     description: 'Moisture-wicking athletic shorts built for high-performance workouts. Features a stretch waistband and hidden zip pockets.'
   },
@@ -118,7 +118,7 @@ const initialProducts = [
     category: 'Women • Knitwear',
     rating: 5,
     reviews: 156,
-    image: 'https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1509319117193-57bab727e09d?w=800&q=80',
     badge: 'NEW',
     description: 'Stay cozy with this chunky oversized knit sweater. Crafted from a soft wool blend, it offers warmth and effortless style for chilly days.'
   },
@@ -130,7 +130,7 @@ const initialProducts = [
     category: 'Men • Shoes',
     rating: 4,
     reviews: 74,
-    image: 'https://images.unsplash.com/photo-1614252209817-3610af8b67ef?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=800&q=80',
     badge: '-15%',
     description: 'Classic Oxford-style slip-on loafers. Made from genuine leather with a cushioned insole for premium comfort in formal settings.'
   },
@@ -142,7 +142,7 @@ const initialProducts = [
     category: 'Women • Jewelry',
     rating: 5,
     reviews: 310,
-    image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1485230895905-ec43ba01a599?w=800&q=80',
     badge: 'HOT',
     description: 'Elegant sterling silver hoop earrings. Hypoallergenic, lightweight, and versatile enough to pair with any outfit, day or night.'
   }
@@ -176,14 +176,14 @@ function initStore() {
 
 const VQuint = {
   getProducts: () => JSON.parse(localStorage.getItem('vq_products')),
-  
+
   getProduct: (id) => {
     const products = VQuint.getProducts();
     return products.find(p => p.id === String(id));
   },
-  
+
   getCart: () => JSON.parse(localStorage.getItem('vq_cart')),
-  
+
   addToCart: (productId, qty = 1, size = 'M', color = 'Default') => {
     const cart = VQuint.getCart();
     const existing = cart.find(item => item.productId === productId && item.size === size && item.color === color);
@@ -224,13 +224,13 @@ const VQuint = {
     let wishlist = VQuint.getWishlist();
     const index = wishlist.indexOf(String(productId));
     const isAdded = index === -1;
-    
+
     if (isAdded) {
       wishlist.push(String(productId));
     } else {
       wishlist.splice(index, 1);
     }
-    
+
     localStorage.setItem('vq_wishlist', JSON.stringify(wishlist));
     VQuint.updateWishlistBadges();
     return isAdded; // Returns true if added, false if removed
@@ -258,17 +258,17 @@ const VQuint = {
 
   openCartDrawer: () => {
     const drawer = document.getElementById('cartDrawer');
-    if(drawer) drawer.classList.add('open');
+    if (drawer) drawer.classList.add('open');
   },
-  
+
   closeCartDrawer: () => {
     const drawer = document.getElementById('cartDrawer');
-    if(drawer) drawer.classList.remove('open');
+    if (drawer) drawer.classList.remove('open');
   },
 
   openSearch: () => {
     const modal = document.getElementById('searchModal');
-    if(modal) {
+    if (modal) {
       modal.classList.add('open');
       setTimeout(() => document.getElementById('searchInput').focus(), 100);
     }
@@ -276,7 +276,7 @@ const VQuint = {
 
   closeSearch: () => {
     const modal = document.getElementById('searchModal');
-    if(modal) modal.classList.remove('open');
+    if (modal) modal.classList.remove('open');
   },
 
   renderCartDrawer: () => {
@@ -286,7 +286,7 @@ const VQuint = {
 
     const cart = VQuint.getCart();
     const products = VQuint.getProducts();
-    
+
     if (cart.length === 0) {
       container.innerHTML = `<div class="empty-cart"><i class="fa-solid fa-cart-arrow-down"></i><p>Your cart is empty.</p></div>`;
       totalEl.textContent = '₹0';
@@ -327,28 +327,28 @@ const VQuint = {
     container.innerHTML = html;
     totalEl.textContent = `₹${total.toLocaleString()}`;
   },
-  
+
   performSearch: (query) => {
     const resultsContainer = document.getElementById('searchResults');
     if (!resultsContainer) return;
-    
+
     if (!query || query.trim().length === 0) {
       resultsContainer.innerHTML = '';
       return;
     }
-    
+
     const term = query.toLowerCase().trim();
     const products = VQuint.getProducts();
-    const filtered = products.filter(p => 
-      p.name.toLowerCase().includes(term) || 
+    const filtered = products.filter(p =>
+      p.name.toLowerCase().includes(term) ||
       p.category.toLowerCase().includes(term)
     );
-    
+
     if (filtered.length === 0) {
       resultsContainer.innerHTML = `<p class="search-no-results">No products found matching "${query}"</p>`;
       return;
     }
-    
+
     let html = '';
     filtered.forEach(p => {
       html += `
@@ -373,11 +373,11 @@ const VQuint = {
 
     const products = VQuint.getProducts();
     let totalValue = 0;
-    
+
     // Calculate total
     cart.forEach(item => {
       const p = products.find(prod => prod.id === item.productId);
-      if(p) totalValue += p.price * item.qty;
+      if (p) totalValue += p.price * item.qty;
     });
 
     // Generate random order ID
@@ -424,13 +424,50 @@ const VQuint = {
 
     // Finish checkout
     localStorage.removeItem('vq_cart');
-    
+
     // UI Update
     VQuint.updateCartBages();
     VQuint.closeCartDrawer();
-    
+
     alert(`Payment Successful! Your order ${orderId} has been placed. Redirecting to Profile...`);
     window.location.href = "profile.html";
+  },
+
+  initMobileMenu: () => {
+    const menuOpen = document.getElementById('menuOpen');
+    const menuClose = document.getElementById('menuClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (menuOpen && mobileMenu) {
+      menuOpen.addEventListener('click', () => {
+        mobileMenu.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+
+    if (menuClose && mobileMenu) {
+      menuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+
+    if (mobileMenu) {
+      mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) {
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // Close menu on link click
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
   }
 };
 

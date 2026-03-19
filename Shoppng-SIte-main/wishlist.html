@@ -161,10 +161,33 @@
     .footer-payments { display: flex; gap: 12px; }
     .footer-payments span { padding: 4px 12px; border-radius: 6px; background: rgba(255,255,255,.08); font-size: .75rem; font-weight: 600; }
 
+    /* ── MOBILE MENU ── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; z-index: 101; }
+    .hamburger span { width: 24px; height: 2px; background: var(--dark); border-radius: 2px; transition: var(--transition); }
+    
+    .mobile-menu { position: fixed; inset: 0; background: var(--white); z-index: 200; opacity: 0; pointer-events: none; transition: var(--transition); overflow-y: auto; padding: 60px 0; }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+    .mobile-menu-inner { width: 100%; max-width: 400px; margin: 0 auto; padding: 20px; display: flex; flex-direction: column; gap: 32px; text-align: center; }
+    .mobile-menu-inner a { font-size: 1.8rem; font-weight: 800; font-family: 'DM Serif Display', serif; border-bottom: 1px solid var(--gray-200); padding: 12px 0; }
+    .mobile-menu .close-btn { position: absolute; top: 24px; right: 24px; font-size: 2rem; background: none; color: var(--dark); z-index: 201; }
+
     @media (max-width: 768px) {
+      .navbar .container { height: 64px; }
+      .nav-actions { gap: 12px; }
+      .nav-actions .icon-btn { width: 36px; height: 36px; font-size: 1rem; }
+      .hamburger { display: flex; }
+      
+      .wishlist-grid { grid-template-columns: 1fr; gap: 24px; }
       .nav-links { display: none; }
       .footer-grid { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-actions .icon-btn[aria-label="Search"],
+      .nav-actions .icon-btn[aria-label="Wishlist"] { display: none; }
+      .logo { font-size: 1.4rem; }
+      .page-header h1 { font-size: 2rem; }
     }
   </style>
 </head>
@@ -186,9 +209,27 @@
         <a href="wishlist.html" class="icon-btn" aria-label="Wishlist" style="background:var(--orange); color:white;"><i class="fa-regular fa-heart"></i><span class="badge wishlist-badge" style="display:none;">0</span></a>
         <button class="icon-btn" aria-label="Cart" onclick="VQuint.openCartDrawer()"><i class="fa-solid fa-cart-shopping"></i><span class="badge cart-badge" style="display:none;">0</span></button>
         <a href="profile.html" class="icon-btn" aria-label="Account"><i class="fa-regular fa-user"></i></a>
+        <button class="hamburger" id="menuOpen" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- ═══ MOBILE MENU ═══ -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <button class="close-btn" id="menuClose"><i class="fa-solid fa-xmark"></i></button>
+      <a href="index.html#new-arrivals">New In</a>
+      <a href="index.html#women">Women</a>
+      <a href="index.html#men">Men</a>
+      <a href="index.html#accessories">Accessories</a>
+      <hr style="border: none; height: 1px; background: rgba(26,26,46,0.1); margin: 10px 0;">
+      <a href="wishlist.html"><i class="fa-regular fa-heart"></i> Wishlist</a>
+      <a href="profile.html"><i class="fa-regular fa-user"></i> Account</a>
+      <a href="admin.html">Admin Dashboard</a>
+    </div>
+  </div>
 
   <!-- ═══ CART DRAWER ═══ -->
   <div class="cart-drawer" id="cartDrawer">
@@ -334,6 +375,7 @@
       VQuint.updateCartBages();
       VQuint.updateWishlistBadges();
       VQuint.renderCartDrawer();
+      VQuint.initMobileMenu();
     });
   </script>
 </body>
