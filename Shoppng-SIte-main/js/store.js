@@ -35,7 +35,7 @@ const initialProducts = [
     rating: 4,
     reviews: 89,
     image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=800&q=80',
-    badge: 'HOT',
+    badge: 'TRENDING',
     description: 'Elegant leather tote bag crafted from genuine Italian leather. Spacious interior compartments, durable handles, and timeless design. A versatile accessory for work or travel.'
   },
   {
@@ -95,7 +95,7 @@ const initialProducts = [
     rating: 5,
     reviews: 230,
     image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80',
-    badge: 'HOT',
+    badge: 'TRENDING',
     description: 'Classic aviator sunglasses with polarized lenses for ultimate UV protection. Lightweight metal frame for all-day comfort.'
   },
   {
@@ -142,8 +142,8 @@ const initialProducts = [
     category: 'Women • Jewelry',
     rating: 5,
     reviews: 310,
-    image: 'https://images.unsplash.com/photo-1485230895905-ec43ba01a599?w=800&q=80',
-    badge: 'HOT',
+    image: 'images/sterling_silver_hoops.png',
+    badge: 'TRENDING',
     description: 'Elegant sterling silver hoop earrings. Hypoallergenic, lightweight, and versatile enough to pair with any outfit, day or night.'
   }
 ];
